@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class GaldinoVideoApplication {
 
+	
 	public static void main(String[] args) {
-		SpringApplication.run(GaldinoVideoApplication.class, args);
+		SpringApplication.run(GaldinoVideoApplication.class, args);		
 	}
-
 }
