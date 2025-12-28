@@ -1,14 +1,19 @@
 package com.LGR.video_store.entities;
 
+import java.util.Objects;
+
 import com.LGR.video_store.enums.Role;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "tb_users")
@@ -19,20 +24,24 @@ public class User {
 	private Long id;
 	
 	@NotBlank(message = "Name can't be blank.")
-	private String name;
+	private String userName;
 	
-	@NotNull(message = "Password can't be empty.")
+	@Size(min = 6, message = "Password must have at least 6 characters.")
+	@NotBlank(message = "Password cannot be blank.")
 	private String password;
 	
+	@Enumerated(EnumType.STRING)
 	private Role role;
+	
+	@OneToOne(mappedBy = "user")
+	private Employee employee;
 	
 	public User() {
 
 	}
 
-	public User(Long id, String name, String password, Role role) {
-		this.id = id;
-		this.name = name;
+	public User(String userName, String password, Role role) {
+		this.userName = userName;
 		this.password = password;
 		this.role = role;
 	}
@@ -40,13 +49,13 @@ public class User {
 	public Long getId() {
 		return id;
 	}
-
-	public String getName() {
-		return name;
+	
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public String getPassword() {
@@ -63,5 +72,30 @@ public class User {
 
 	public void setRole(Role role) {
 		this.role = role;
+	}
+
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		return Objects.equals(id, other.id);
 	}
 }
