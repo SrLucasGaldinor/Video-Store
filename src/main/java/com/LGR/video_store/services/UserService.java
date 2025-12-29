@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.LGR.video_store.dtos.UserCreateDTO;
+import com.LGR.video_store.dtos.UserPatchDTO;
 import com.LGR.video_store.dtos.UserResponseDTO;
 import com.LGR.video_store.dtos.UserUpdateDTO;
 import com.LGR.video_store.entities.User;
@@ -34,7 +35,7 @@ public class UserService {
 
 	public List<UserResponseDTO> findAll() {
 		return repository.findAll()
-						 .stream()
+						 .stream()	
 						 .map(this::toResponseDTO)
 						 .collect(Collectors.toList());
 	}
@@ -50,6 +51,17 @@ public class UserService {
 		User user = repository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("User not found with Id: " + id));
 
+		user.setUserName(dto.getUserName());
+		user.setPassword(dto.getPassword());
+		user.setRole(dto.getRole());
+
+		return toResponseDTO(repository.save(user));
+	}
+
+	public UserResponseDTO patch(Long id, UserPatchDTO dto) {
+		User user = repository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("User not found with Id: " + id));
+
 		if (dto.getUserName() != null) {
 			user.setUserName(dto.getUserName());
 		}
@@ -62,9 +74,7 @@ public class UserService {
 			user.setRole(dto.getRole());
 		}
 
-		User updatedUser = repository.save(user);
-
-		return toResponseDTO(updatedUser);
+		return toResponseDTO(repository.save(user));
 	}
 
 	public void delete(Long id) {
@@ -75,8 +85,6 @@ public class UserService {
 	}
 
 	private UserResponseDTO toResponseDTO(User user) {
-		return new UserResponseDTO(user.getId(),
-								   user.getUserName(),
-								   user.getRole());
+		return new UserResponseDTO(user.getId(), user.getUserName(), user.getRole());
 	}
 }
