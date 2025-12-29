@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.LGR.video_store.dtos.UserCreateDTO;
+import com.LGR.video_store.dtos.UserPatchDTO;
 import com.LGR.video_store.dtos.UserResponseDTO;
 import com.LGR.video_store.dtos.UserUpdateDTO;
 import com.LGR.video_store.services.UserService;
@@ -49,6 +51,11 @@ public class UserController {
 	@PutMapping("{id}")
 	public ResponseEntity<UserResponseDTO> update(@PathVariable Long id, @Valid @RequestBody UserUpdateDTO dto) {
 		return ResponseEntity.ok(service.update(id, dto));
+	}
+	
+	@PatchMapping
+	public ResponseEntity<UserResponseDTO> patch(@PathVariable Long id, @RequestBody UserPatchDTO dto) {
+		return ResponseEntity.ok(service.patch(id, dto));
 	}
 	
 	@DeleteMapping("{id}")
