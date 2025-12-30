@@ -33,6 +33,8 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	private Role role;
 	
+	private boolean active = true;
+	
 	@OneToOne(mappedBy = "user")
 	private Employee employee;
 	
@@ -72,6 +74,18 @@ public class User {
 
 	public void setRole(Role role) {
 		this.role = role;
+	}
+	
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Employee getEmployee() {

@@ -39,7 +39,7 @@ public class UserService {
 	
 	@Transactional(readOnly = true)
 	public List<UserResponseDTO> findAll() {
-		return repository.findAll()
+		return repository.findByActiveTrue()
 						 .stream()	
 						 .map(this::toResponseDTO)
 						 .collect(Collectors.toList());
@@ -47,7 +47,7 @@ public class UserService {
 
 	@Transactional(readOnly = true)
 	public UserResponseDTO findById(Long id) {
-		User user = repository.findById(id)
+		User user = repository.findByIdAndActiveTrue(id)
 				.orElseThrow(() -> new ResourceNotFoundException("User not found with Id: " + id));
 
 		return toResponseDTO(user);
@@ -87,10 +87,11 @@ public class UserService {
 
 	@Transactional
 	public void delete(Long id) {
-		User user = repository.findById(id)
+		User user = repository.findByIdAndActiveTrue(id)
 				.orElseThrow(() -> new ResourceNotFoundException("User not found with Id: " + id));
-
-		repository.delete(user);
+		
+		user.setActive(false);
+		repository.save(user);
 	}
 
 	private UserResponseDTO toResponseDTO(User user) {
