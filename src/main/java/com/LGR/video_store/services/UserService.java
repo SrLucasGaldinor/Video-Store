@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.LGR.video_store.dtos.UserCreateDTO;
 import com.LGR.video_store.dtos.UserPatchDTO;
@@ -12,6 +13,8 @@ import com.LGR.video_store.dtos.UserUpdateDTO;
 import com.LGR.video_store.entities.User;
 import com.LGR.video_store.exceptions.ResourceNotFoundException;
 import com.LGR.video_store.repositories.UserRepository;
+
+
 
 @Service
 public class UserService {
@@ -22,6 +25,7 @@ public class UserService {
 		this.repository = repository;
 	}
 
+	@Transactional
 	public UserResponseDTO create(UserCreateDTO dto) {
 		User user = new User();
 		user.setUserName(dto.getUserName());
@@ -32,7 +36,8 @@ public class UserService {
 
 		return toResponseDTO(savedUser);
 	}
-
+	
+	@Transactional(readOnly = true)
 	public List<UserResponseDTO> findAll() {
 		return repository.findAll()
 						 .stream()	
@@ -40,6 +45,7 @@ public class UserService {
 						 .collect(Collectors.toList());
 	}
 
+	@Transactional(readOnly = true)
 	public UserResponseDTO findById(Long id) {
 		User user = repository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("User not found with Id: " + id));
@@ -47,6 +53,7 @@ public class UserService {
 		return toResponseDTO(user);
 	}
 
+	@Transactional
 	public UserResponseDTO update(Long id, UserUpdateDTO dto) {
 		User user = repository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("User not found with Id: " + id));
@@ -58,6 +65,7 @@ public class UserService {
 		return toResponseDTO(repository.save(user));
 	}
 
+	@Transactional
 	public UserResponseDTO patch(Long id, UserPatchDTO dto) {
 		User user = repository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("User not found with Id: " + id));
@@ -77,6 +85,7 @@ public class UserService {
 		return toResponseDTO(repository.save(user));
 	}
 
+	@Transactional
 	public void delete(Long id) {
 		User user = repository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("User not found with Id: " + id));
