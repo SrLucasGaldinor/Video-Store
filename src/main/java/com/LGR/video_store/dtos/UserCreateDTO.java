@@ -18,10 +18,6 @@ public class UserCreateDTO {
 	@NotNull(message = "Role is required")
 	private Role role;
 
-	public UserCreateDTO() {
-		
-	}
-
 	public String getUserName() {
 		return userName;
 	}
