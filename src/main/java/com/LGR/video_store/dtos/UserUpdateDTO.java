@@ -8,14 +8,14 @@ import jakarta.validation.constraints.Size;
 
 public class UserUpdateDTO {
 	
-	@NotBlank
+	@NotBlank(message = "Username can't be blank")
     private String userName;
 
-    @NotBlank
-    @Size(min = 6)
+    @NotBlank(message = "Password can't be blank")
+    @Size(min = 6, message = "Password must have at least 6 characters")
     private String password;
 
-    @NotNull
+    @NotNull(message = "Role can't be null")
     private Role role;
 
     public String getUserName() {

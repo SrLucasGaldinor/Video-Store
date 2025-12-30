@@ -3,6 +3,7 @@ package com.LGR.video_store.dtos;
 import com.LGR.video_store.enums.Role;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class UserCreateDTO {
@@ -14,6 +15,7 @@ public class UserCreateDTO {
 	@Size(min = 6, message = "Password must have at least 6 characters")
 	private String password;
 	
+	@NotNull(message = "Role is required")
 	private Role role;
 
 	public UserCreateDTO() {
