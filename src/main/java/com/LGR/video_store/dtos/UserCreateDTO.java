@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Size;
 
 public class UserCreateDTO {
 
-	@NotBlank
+	@NotBlank(message = "Username is required")
 	private String userName;
 
 	@NotBlank(message = "Password is required")

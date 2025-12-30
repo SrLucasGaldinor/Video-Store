@@ -12,8 +12,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "tb_users")
@@ -23,11 +21,7 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotBlank(message = "Name can't be blank.")
 	private String userName;
-	
-	@Size(min = 6, message = "Password must have at least 6 characters.")
-	@NotBlank(message = "Password cannot be blank.")
 	private String password;
 	
 	@Enumerated(EnumType.STRING)
