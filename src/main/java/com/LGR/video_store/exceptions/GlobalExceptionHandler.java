@@ -18,7 +18,7 @@ public class GlobalExceptionHandler {
 															    HttpServletRequest request) {
 		ErrorResponse error = new ErrorResponse(Instant.now(),
 												HttpStatus.NOT_FOUND.value(),
-												"Resource not found!",
+												"Resource not found",
 												ex.getMessage(),
 												request.getRequestURI());
 		
@@ -36,8 +36,20 @@ public class GlobalExceptionHandler {
 				
 		ErrorResponse error = new ErrorResponse(Instant.now(),
 												HttpStatus.BAD_REQUEST.value(),
-												"Validation error!",
+												"Validation error",
 												message,
+												request.getRequestURI());
+		
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+	}
+	
+	@ExceptionHandler(BusinessRuleException.class)
+	public ResponseEntity<ErrorResponse> handleBusinessRule(BusinessRuleException ex,
+															HttpServletRequest request) {
+		ErrorResponse error = new ErrorResponse(Instant.now(),
+												HttpStatus.BAD_REQUEST.value(),
+												"Bad request",
+												ex.getMessage(),
 												request.getRequestURI());
 		
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
