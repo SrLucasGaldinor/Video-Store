@@ -14,46 +14,48 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.LGR.video_store.dtos.UserCreateDTO;
-import com.LGR.video_store.dtos.UserPatchDTO;
-import com.LGR.video_store.dtos.UserResponseDTO;
-import com.LGR.video_store.dtos.UserUpdateDTO;
-import com.LGR.video_store.services.UserService;
+import com.LGR.video_store.dtos.EmployeeCreateDTO;
+import com.LGR.video_store.dtos.EmployeePatchDTO;
+import com.LGR.video_store.dtos.EmployeeResponseDTO;
+import com.LGR.video_store.dtos.EmployeeUpdateDTO;
+import com.LGR.video_store.services.EmployeeService;
 
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/users")
-public class UserController {
-
-	private final UserService service;
-
-	public UserController(UserService service) {
+@RequestMapping("/employees")
+public class EmployeeController {
+	
+	private final EmployeeService service;
+	
+	public EmployeeController(EmployeeService service) {
 		this.service = service;
 	}
-	
+
 	@GetMapping
-	public ResponseEntity<List<UserResponseDTO>> findAll() {
+	public ResponseEntity<List<EmployeeResponseDTO>> findAll() {
 		return ResponseEntity.ok(service.findAll());
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<UserResponseDTO> findById(@PathVariable Long id) {
+	public ResponseEntity<EmployeeResponseDTO> findById(@PathVariable Long id) {
 		return ResponseEntity.ok(service.findById(id));
 	}
-
+	
 	@PostMapping
-	public ResponseEntity<UserResponseDTO> create(@Valid @RequestBody UserCreateDTO dto) {
+	public ResponseEntity<EmployeeResponseDTO> create(@Valid @RequestBody EmployeeCreateDTO dto) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(service.create(dto));
 	}
-
+	
 	@PutMapping("/{id}")
-	public ResponseEntity<UserResponseDTO> update(@PathVariable Long id, @Valid @RequestBody UserUpdateDTO dto) {
+	public ResponseEntity<EmployeeResponseDTO> update(@PathVariable Long id,
+													  @Valid @RequestBody EmployeeUpdateDTO dto) {
 		return ResponseEntity.ok(service.update(id, dto));
 	}
 	
-	@PatchMapping
-	public ResponseEntity<UserResponseDTO> patch(@PathVariable Long id, @RequestBody UserPatchDTO dto) {
+	@PatchMapping("/{id}")
+	public ResponseEntity<EmployeeResponseDTO> patch(@PathVariable Long id,
+													 @Valid @RequestBody EmployeePatchDTO dto) {
 		return ResponseEntity.ok(service.patch(id, dto));
 	}
 	
@@ -62,4 +64,5 @@ public class UserController {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
+	
 }

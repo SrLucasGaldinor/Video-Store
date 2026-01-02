@@ -33,9 +33,7 @@ public class UserService {
 		user.setPassword(dto.getPassword());
 		user.setRole(dto.getRole());
 
-		User savedUser = repository.save(user);
-
-		return toResponseDTO(savedUser);
+		return toResponseDTO(repository.save(user));
 	}
 	
 	@Transactional(readOnly = true)
@@ -63,8 +61,7 @@ public class UserService {
 		user.setPassword(dto.getPassword());
 		user.setRole(dto.getRole());
 		
-		User updatedUser = repository.save(user);
-		return toResponseDTO(updatedUser);
+		return toResponseDTO(repository.save(user));
 	}
 
 	@Transactional
@@ -84,8 +81,7 @@ public class UserService {
 			user.setRole(dto.getRole());
 		}
 
-		User updatedUser = repository.save(user);
-		return toResponseDTO(updatedUser);
+		return toResponseDTO(repository.save(user));
 	}
 
 	@Transactional
