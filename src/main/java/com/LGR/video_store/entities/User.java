@@ -74,8 +74,12 @@ public class User {
 		return active;
 	}
 
-	public void setActive(boolean active) {
-		this.active = active;
+	public void active() {
+		this.active = true;
+	}
+	
+	public void deactivate() {
+		this.active = false;
 	}
 
 	public void setId(Long id) {

@@ -9,8 +9,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "tb_employees")
@@ -22,6 +20,8 @@ public class Employee {
 	
 	private String name;
 	private String cpf;
+	
+	private boolean active = true;
 	
 	@OneToOne
 	@JoinColumn(name = "user_id", unique = true)
@@ -56,7 +56,19 @@ public class Employee {
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
+	
+	public boolean isActive() {
+		return active;
+	}
+	
+	public void activate() {
+		this.active = true;
+	}
 
+	public void deactivate() {
+		this.active = false;
+	}
+	
 	public User getUser() {
 		return user;
 	}

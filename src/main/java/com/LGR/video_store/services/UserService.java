@@ -11,6 +11,7 @@ import com.LGR.video_store.dtos.UserPatchDTO;
 import com.LGR.video_store.dtos.UserResponseDTO;
 import com.LGR.video_store.dtos.UserUpdateDTO;
 import com.LGR.video_store.entities.User;
+import com.LGR.video_store.exceptions.BusinessRuleException;
 import com.LGR.video_store.exceptions.ResourceNotFoundException;
 import com.LGR.video_store.repositories.UserRepository;
 
@@ -55,20 +56,21 @@ public class UserService {
 
 	@Transactional
 	public UserResponseDTO update(Long id, UserUpdateDTO dto) {
-		User user = repository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("User not found with Id: " + id));
+		User user = repository.findByIdAndActiveTrue(id)
+				.orElseThrow(() -> new BusinessRuleException("Inactive or non-existent user"));
 
 		user.setUserName(dto.getUserName());
 		user.setPassword(dto.getPassword());
 		user.setRole(dto.getRole());
-
-		return toResponseDTO(repository.save(user));
+		
+		User updatedUser = repository.save(user);
+		return toResponseDTO(updatedUser);
 	}
 
 	@Transactional
 	public UserResponseDTO patch(Long id, UserPatchDTO dto) {
-		User user = repository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("User not found with Id: " + id));
+		User user = repository.findByIdAndActiveTrue(id)
+				.orElseThrow(() -> new BusinessRuleException("Inactive or non-existent user"));
 
 		if (dto.getUserName() != null) {
 			user.setUserName(dto.getUserName());
@@ -82,7 +84,8 @@ public class UserService {
 			user.setRole(dto.getRole());
 		}
 
-		return toResponseDTO(repository.save(user));
+		User updatedUser = repository.save(user);
+		return toResponseDTO(updatedUser);
 	}
 
 	@Transactional
@@ -90,7 +93,7 @@ public class UserService {
 		User user = repository.findByIdAndActiveTrue(id)
 				.orElseThrow(() -> new ResourceNotFoundException("User not found with Id: " + id));
 		
-		user.setActive(false);
+		user.deactivate();
 		repository.save(user);
 	}
 
