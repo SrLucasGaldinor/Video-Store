@@ -15,6 +15,12 @@ public class EmployeeCreateDTO {
 	
 	@NotNull(message = "User_id is required")
 	private Long userId;
+	
+	public EmployeeCreateDTO(String name, String cpf, Long userId) {
+		this.name = name;
+		this.cpf = cpf;
+		this.userId = userId;
+	}
 
 	public String getName() {
 		return name;

@@ -17,6 +17,12 @@ public class UserCreateDTO {
 	
 	@NotNull(message = "Role is required")
 	private Role role;
+	
+	public UserCreateDTO(String userName, String password, Role role) {
+		this.userName = userName;
+		this.password = password;
+		this.role = role;
+	}
 
 	public String getUserName() {
 		return userName;
