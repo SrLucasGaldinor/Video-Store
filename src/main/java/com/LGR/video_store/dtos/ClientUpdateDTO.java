@@ -5,14 +5,14 @@ import jakarta.validation.constraints.Size;
 
 public class ClientUpdateDTO {
 	
-	@NotBlank(message = "Name is required")
+	@NotBlank(message = "Name can't be blank")
 	private String name;
 	
-	@NotBlank(message = "CPF is required")
+	@NotBlank(message = "CPF can't be blank")
 	@Size(min = 11, message = "CPF must have 11 characters")
 	private String cpf;
 	
-	@NotBlank(message = "Phone is required")
+	@NotBlank(message = "Phone can't be blank")
 	@Size(min = 11, message = "Phone must have 11 characters")
 	private String phone;
 

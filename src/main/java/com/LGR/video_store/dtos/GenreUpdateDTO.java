@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 
 public class GenreUpdateDTO {
 	
-	@NotBlank(message = "Name is required")
+	@NotBlank(message = "Name can't be blank")
 	private String name;
 
 	public GenreUpdateDTO(String name) {
