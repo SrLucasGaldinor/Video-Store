@@ -14,7 +14,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_users")
+@Table(name = "tb_user")
 public class User {
 	
 	@Id
@@ -74,16 +74,12 @@ public class User {
 		return active;
 	}
 
-	public void active() {
+	public void activate() {
 		this.active = true;
 	}
 	
 	public void deactivate() {
 		this.active = false;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public Employee getEmployee() {

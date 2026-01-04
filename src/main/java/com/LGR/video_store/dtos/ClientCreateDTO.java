@@ -1,10 +1,9 @@
 package com.LGR.video_store.dtos;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-public class EmployeeCreateDTO {
+public class ClientCreateDTO {
 
 	@NotBlank(message = "Name is required")
 	private String name;
@@ -13,24 +12,28 @@ public class EmployeeCreateDTO {
 	@Size(min = 11, message = "CPF must have 11 characters")
 	private String cpf;
 	
-	@NotNull(message = "User_id is required")
-	private Long userId;
 	
-	public EmployeeCreateDTO(String name, String cpf, Long userId) {
+	@Size(min = 11, message = "Phone must have 11 characters")
+	private String phone;
+
+
+	public ClientCreateDTO(String name, String cpf, String phone) {
 		this.name = name;
 		this.cpf = cpf;
-		this.userId = userId;
+		this.phone = phone;
 	}
 
 	public String getName() {
 		return name;
 	}
 
+
 	public String getCpf() {
 		return cpf;
 	}
 
-	public Long getUserId() {
-		return userId;
+
+	public String getPhone() {
+		return phone;
 	}
 }

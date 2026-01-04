@@ -15,8 +15,6 @@ import com.LGR.video_store.exceptions.BusinessRuleException;
 import com.LGR.video_store.exceptions.ResourceNotFoundException;
 import com.LGR.video_store.repositories.UserRepository;
 
-
-
 @Service
 public class UserService {
 

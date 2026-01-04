@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 
 public class UserPatchDTO {
 
-	@Size(min = 3, message = "Username must have at least 6 characters")
+	@Size(min = 3, message = "Username must have at least 3 characters")
 	private String userName;
 	
 	@Size(min = 6, message = "Password must have at least 6 characters")

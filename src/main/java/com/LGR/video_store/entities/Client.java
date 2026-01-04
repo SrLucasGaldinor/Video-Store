@@ -6,13 +6,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_employee")
-public class Employee {
+@Table(name = "tb_client")
+public class Client {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,27 +18,19 @@ public class Employee {
 	
 	private String name;
 	private String cpf;
-	
+	private String phone;
 	private boolean active = true;
 	
-	@OneToOne
-	@JoinColumn(name = "user_id", unique = true)
-	private User user;
-	
-	public Employee() {
+	public Client() {
 
 	}
 
-	public Employee(String name, String cpf, User user) {
+	public Client(String name, String cpf, String phone) {
 		this.name = name;
 		this.cpf = cpf;
-		this.user = user;
+		this.phone = phone;
 	}
 
-	public Long getId() {
-		return id;
-	}
-	
 	public String getName() {
 		return name;
 	}
@@ -56,7 +46,19 @@ public class Employee {
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-	
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
 	public boolean isActive() {
 		return active;
 	}
@@ -64,17 +66,9 @@ public class Employee {
 	public void activate() {
 		this.active = true;
 	}
-
+	
 	public void deactivate() {
 		this.active = false;
-	}
-	
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
 	}
 
 	@Override
@@ -90,7 +84,7 @@ public class Employee {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Employee other = (Employee) obj;
+		Client other = (Client) obj;
 		return Objects.equals(id, other.id);
 	}
 }
