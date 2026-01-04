@@ -6,24 +6,33 @@ import org.springframework.stereotype.Component;
 
 import com.LGR.video_store.dtos.ClientCreateDTO;
 import com.LGR.video_store.dtos.EmployeeCreateDTO;
+import com.LGR.video_store.dtos.GenreCreateDTO;
 import com.LGR.video_store.dtos.UserCreateDTO;
 import com.LGR.video_store.enums.Role;
 import com.LGR.video_store.services.ClientService;
 import com.LGR.video_store.services.EmployeeService;
+import com.LGR.video_store.services.GenreService;
 import com.LGR.video_store.services.UserService;
 
 @Component
 @Profile("test")
 public class DataInitialization implements CommandLineRunner {
 
+
 	private final UserService usrService;
 	private final EmployeeService empService;
 	private final ClientService clientService;
+	private final GenreService genreService;
 
-	public DataInitialization(UserService usrService, EmployeeService empService, ClientService clientService) {
+	public DataInitialization(UserService usrService,
+							  EmployeeService empService,
+							  ClientService clientService,
+							  GenreService genreService) {
+		
 		this.usrService = usrService;
 		this.empService = empService;
 		this.clientService = clientService;
+		this.genreService = genreService;
 		
 	}
 
@@ -71,5 +80,17 @@ public class DataInitialization implements CommandLineRunner {
 		clientService.create(client3);
 		clientService.create(client4);
 		clientService.create(client5);
+		
+		GenreCreateDTO genre1 = new GenreCreateDTO("Terror");
+		GenreCreateDTO genre2 = new GenreCreateDTO("Drama");
+		GenreCreateDTO genre3 = new GenreCreateDTO("Ação");
+		GenreCreateDTO genre4 = new GenreCreateDTO("Sci-Fi");
+		GenreCreateDTO genre5 = new GenreCreateDTO("Suspense");
+		
+		genreService.create(genre1);
+		genreService.create(genre2);
+		genreService.create(genre3);
+		genreService.create(genre4);
+		genreService.create(genre5);	
 	}
 }
