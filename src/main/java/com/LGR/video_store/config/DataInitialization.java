@@ -7,18 +7,20 @@ import org.springframework.stereotype.Component;
 import com.LGR.video_store.dtos.ClientCreateDTO;
 import com.LGR.video_store.dtos.EmployeeCreateDTO;
 import com.LGR.video_store.dtos.GenreCreateDTO;
+import com.LGR.video_store.dtos.MovieCreateDTO;
 import com.LGR.video_store.dtos.UserCreateDTO;
 import com.LGR.video_store.enums.Role;
 import com.LGR.video_store.services.ClientService;
 import com.LGR.video_store.services.EmployeeService;
 import com.LGR.video_store.services.GenreService;
+import com.LGR.video_store.services.MovieService;
 import com.LGR.video_store.services.UserService;
 
 @Component
 @Profile("test")
 public class DataInitialization implements CommandLineRunner {
 
-
+    private final MovieService movieService;
 	private final UserService usrService;
 	private final EmployeeService empService;
 	private final ClientService clientService;
@@ -27,13 +29,14 @@ public class DataInitialization implements CommandLineRunner {
 	public DataInitialization(UserService usrService,
 							  EmployeeService empService,
 							  ClientService clientService,
-							  GenreService genreService) {
+							  GenreService genreService,
+							  MovieService movieService) {
 		
 		this.usrService = usrService;
 		this.empService = empService;
 		this.clientService = clientService;
 		this.genreService = genreService;
-		
+		this.movieService = movieService;	
 	}
 
 	@Override
@@ -92,5 +95,17 @@ public class DataInitialization implements CommandLineRunner {
 		genreService.create(genre3);
 		genreService.create(genre4);
 		genreService.create(genre5);	
+		
+		MovieCreateDTO movie1 = new MovieCreateDTO("Figth Club","A" , 1999, 120, "URL1");
+		MovieCreateDTO movie2 = new MovieCreateDTO("Dune","A" , 2002, 200, "URL2");
+		MovieCreateDTO movie3 = new MovieCreateDTO("Lords of the Rings","C" , 2001, 320, "URL3");
+		MovieCreateDTO movie4 = new MovieCreateDTO("Interstelar","D" , 2014, 220, "URL4");
+		MovieCreateDTO movie5 = new MovieCreateDTO("Godfather","E" , 1989, 200, "URL5");
+		
+		movieService.create(movie1);
+		movieService.create(movie2);
+		movieService.create(movie3);
+		movieService.create(movie4);
+		movieService.create(movie5);
 	}
 }

@@ -18,8 +18,8 @@ public class Movie {
 	
 	private String title;
 	private String director;
-	private Integer release_year;
-	private Integer duration_minutes;
+	private Integer releaseYear;
+	private Integer durationMinutes;
 	private String posterURL;
 	private boolean active = true;
 	
@@ -27,11 +27,11 @@ public class Movie {
 
 	}
 
-	public Movie(String title, String director, Integer release_year, Integer duration_minutes, String posterURL) {
+	public Movie(String title, String director, Integer releaseYear, Integer durationMinutes, String posterURL) {
 		this.title = title;
 		this.director = director;
-		this.release_year = release_year;
-		this.duration_minutes = duration_minutes;
+		this.releaseYear = releaseYear;
+		this.durationMinutes = durationMinutes;
 		this.posterURL = posterURL;
 	}
 
@@ -55,20 +55,20 @@ public class Movie {
 		this.director = director;
 	}
 
-	public Integer getRelease_year() {
-		return release_year;
+	public Integer getReleaseYear() {
+		return releaseYear;
 	}
 
-	public void setRelease_year(Integer release_year) {
-		this.release_year = release_year;
+	public void setReleaseYear(Integer releaseYear) {
+		this.releaseYear = releaseYear;
 	}
 
-	public Integer getDuration_minutes() {
-		return duration_minutes;
+	public Integer getDurationMinutes() {
+		return durationMinutes;
 	}
 
-	public void setDuration_minutes(Integer duration_minutes) {
-		this.duration_minutes = duration_minutes;
+	public void setDurationMinutes(Integer durationMinutes) {
+		this.durationMinutes = durationMinutes;
 	}
 
 	public String getPosterURL() {

@@ -5,17 +5,17 @@ public class MovieResponseDTO {
 	private Long id;
 	private String title;
 	private String director;
-	private Integer release_year;
-	private Integer duration_minutes;
+	private Integer releaseYear;
+	private Integer durationMinutes;
 	private String posterURL;
 	
-	public MovieResponseDTO(Long id, String title, String director, Integer release_year, Integer duration_minutes,
+	public MovieResponseDTO(Long id, String title, String director, Integer releaseYear, Integer durationMinutes,
 			String posterURL) {
 		this.id = id;
 		this.title = title;
 		this.director = director;
-		this.release_year = release_year;
-		this.duration_minutes = duration_minutes;
+		this.releaseYear = releaseYear;
+		this.durationMinutes = durationMinutes;
 		this.posterURL = posterURL;
 	}
 
@@ -31,12 +31,12 @@ public class MovieResponseDTO {
 		return director;
 	}
 
-	public Integer getRelease_year() {
-		return release_year;
+	public Integer getReleaseYear() {
+		return releaseYear;
 	}
 
-	public Integer getDuration_minutes() {
-		return duration_minutes;
+	public Integer getDurationMinutes() {
+		return durationMinutes;
 	}
 
 	public String getPosterURL() {
