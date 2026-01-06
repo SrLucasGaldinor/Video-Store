@@ -43,7 +43,7 @@ public class GenreService {
 		Genre genre = repository.findByIdAndActiveTrue(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
 		
-		return toResponseDTO(repository.save(genre));
+		return toResponseDTO(genre);
 	}
 	
 	@Transactional

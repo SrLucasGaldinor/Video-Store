@@ -1,5 +1,8 @@
 package com.LGR.video_store.config;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
@@ -96,11 +99,11 @@ public class DataInitialization implements CommandLineRunner {
 		genreService.create(genre4);
 		genreService.create(genre5);	
 		
-		MovieCreateDTO movie1 = new MovieCreateDTO("Figth Club","A" , 1999, 120, "URL1");
-		MovieCreateDTO movie2 = new MovieCreateDTO("Dune","A" , 2002, 200, "URL2");
-		MovieCreateDTO movie3 = new MovieCreateDTO("Lords of the Rings","C" , 2001, 320, "URL3");
-		MovieCreateDTO movie4 = new MovieCreateDTO("Interstelar","D" , 2014, 220, "URL4");
-		MovieCreateDTO movie5 = new MovieCreateDTO("Godfather","E" , 1989, 200, "URL5");
+		MovieCreateDTO movie1 = new MovieCreateDTO("Figth Club","A" , 1999, 120, "URL1", Arrays.asList(1L, 2L));
+		MovieCreateDTO movie2 = new MovieCreateDTO("Dune","A" , 2002, 200, "URL2", Arrays.asList(3L));
+		MovieCreateDTO movie3 = new MovieCreateDTO("Lords of the Rings","C" , 2001, 320, "URL3", Arrays.asList(1L, 4L));
+		MovieCreateDTO movie4 = new MovieCreateDTO("Interstelar","D" , 2014, 220, "URL4", Arrays.asList(4L, 5L));
+		MovieCreateDTO movie5 = new MovieCreateDTO("Godfather","E" , 1989, 200, "URL5", Arrays.asList(1L, 3L));
 		
 		movieService.create(movie1);
 		movieService.create(movie2);

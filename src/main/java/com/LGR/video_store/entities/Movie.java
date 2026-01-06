@@ -1,11 +1,16 @@
 package com.LGR.video_store.entities;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,6 +27,12 @@ public class Movie {
 	private Integer durationMinutes;
 	private String posterURL;
 	private boolean active = true;
+	
+	@ManyToMany
+	@JoinTable(name = "movie_genre",
+			   joinColumns = @JoinColumn(name = "movie_id"),
+			   inverseJoinColumns = @JoinColumn(name = "genre_id"))
+	private List<Genre> genres = new ArrayList<>();
 	
 	public Movie() {
 
@@ -78,7 +89,11 @@ public class Movie {
 	public void setPosterURL(String posterURL) {
 		this.posterURL = posterURL;
 	}
-
+	
+	public List<Genre> getGenres() {
+		return genres;
+	}
+	
 	public boolean isActive() {
 		return active;
 	}

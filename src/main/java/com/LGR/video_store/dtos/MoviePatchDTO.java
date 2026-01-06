@@ -1,5 +1,7 @@
 package com.LGR.video_store.dtos;
 
+import java.util.List;
+
 import jakarta.validation.constraints.Size;
 
 public class MoviePatchDTO {
@@ -18,7 +20,10 @@ public class MoviePatchDTO {
 	
 	@Size(min = 3, message = "Poster URL must have 3 characters")
 	private String posterURL;
-
+	
+	@Size(min = 1, message = "Genre must have 1 characters")
+	private List<Long> genresId;
+	
 	public String getTitle() {
 		return title;
 	}
@@ -37,5 +42,9 @@ public class MoviePatchDTO {
 
 	public String getPosterURL() {
 		return posterURL;
+	}
+
+	public List<Long> getGenresId() {
+		return genresId;
 	}	
 }
