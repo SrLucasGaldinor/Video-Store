@@ -68,6 +68,47 @@ public class MovieCopyService {
 	}
 	
 	@Transactional
+	public MovieCopyResponseDTO returnCopy(Long id) {
+		MovieCopy copy = movieCopyRepository.findByIdAndActiveTrue(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
+		
+		if(copy.getStatus() == MovieCopyStatus.RENTED) {
+			copy.markAsAvailable();
+		} else {
+			throw new BusinessRuleException("Only rented copies can be returned");
+		}
+		
+		return toResponseDTO(movieCopyRepository.save(copy));
+	}
+	
+	@Transactional
+	public MovieCopyResponseDTO markAsDamaged(Long id) {
+		MovieCopy copy = movieCopyRepository.findByIdAndActiveTrue(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
+		
+		if(copy.getStatus() == MovieCopyStatus.LOST) {
+			throw new BusinessRuleException("Lost copies can't be marked as damaged");
+		}
+		
+		copy.markAsDamaged();
+		
+		return toResponseDTO(movieCopyRepository.save(copy));
+	}
+	
+	@Transactional
+	public MovieCopyResponseDTO markAsLost(Long id) {
+		MovieCopy copy = movieCopyRepository.findByIdAndActiveTrue(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
+		
+		if(copy.getStatus() == MovieCopyStatus.LOST) {
+			throw new BusinessRuleException("This copy is already lost");
+		}
+		
+		copy.markAsLost();
+		return toResponseDTO(movieCopyRepository.save(copy));
+	}
+	
+	@Transactional
 	public void delete(Long id) {
 		MovieCopy copy = movieCopyRepository.findByIdAndActiveTrue(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
