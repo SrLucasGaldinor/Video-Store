@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -33,6 +34,9 @@ public class Movie {
 			   joinColumns = @JoinColumn(name = "movie_id"),
 			   inverseJoinColumns = @JoinColumn(name = "genre_id"))
 	private List<Genre> genres = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "movie")
+	private List<MovieCopy> copies = new ArrayList<>();
 	
 	public Movie() {
 
@@ -94,6 +98,10 @@ public class Movie {
 		return genres;
 	}
 	
+	public List<MovieCopy> getCopies() {
+		return copies;
+	}
+
 	public boolean isActive() {
 		return active;
 	}
