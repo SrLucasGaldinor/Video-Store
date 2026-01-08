@@ -1,6 +1,5 @@
 package com.LGR.video_store.config;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.springframework.boot.CommandLineRunner;
@@ -10,12 +9,14 @@ import org.springframework.stereotype.Component;
 import com.LGR.video_store.dtos.ClientCreateDTO;
 import com.LGR.video_store.dtos.EmployeeCreateDTO;
 import com.LGR.video_store.dtos.GenreCreateDTO;
+import com.LGR.video_store.dtos.MovieCopyCreateDTO;
 import com.LGR.video_store.dtos.MovieCreateDTO;
 import com.LGR.video_store.dtos.UserCreateDTO;
 import com.LGR.video_store.enums.Role;
 import com.LGR.video_store.services.ClientService;
 import com.LGR.video_store.services.EmployeeService;
 import com.LGR.video_store.services.GenreService;
+import com.LGR.video_store.services.MovieCopyService;
 import com.LGR.video_store.services.MovieService;
 import com.LGR.video_store.services.UserService;
 
@@ -28,18 +29,21 @@ public class DataInitialization implements CommandLineRunner {
 	private final EmployeeService empService;
 	private final ClientService clientService;
 	private final GenreService genreService;
+	private final MovieCopyService movieCopyService;
 
 	public DataInitialization(UserService usrService,
 							  EmployeeService empService,
 							  ClientService clientService,
 							  GenreService genreService,
-							  MovieService movieService) {
+							  MovieService movieService,
+							  MovieCopyService movieCopyService) {
 		
 		this.usrService = usrService;
 		this.empService = empService;
 		this.clientService = clientService;
 		this.genreService = genreService;
 		this.movieService = movieService;	
+		this.movieCopyService = movieCopyService;
 	}
 
 	@Override
@@ -110,5 +114,17 @@ public class DataInitialization implements CommandLineRunner {
 		movieService.create(movie3);
 		movieService.create(movie4);
 		movieService.create(movie5);
+		
+		MovieCopyCreateDTO copy1 = new MovieCopyCreateDTO(1L);
+		MovieCopyCreateDTO copy2 = new MovieCopyCreateDTO(2L);
+		MovieCopyCreateDTO copy3 = new MovieCopyCreateDTO(3L);
+		MovieCopyCreateDTO copy4 = new MovieCopyCreateDTO(4L);
+		MovieCopyCreateDTO copy5 = new MovieCopyCreateDTO(5L);
+		
+		movieCopyService.create(copy1);
+		movieCopyService.create(copy2);
+		movieCopyService.create(copy3);
+		movieCopyService.create(copy4);
+		movieCopyService.create(copy5);
 	}
 }
