@@ -1,5 +1,7 @@
 package com.LGR.video_store.config;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 import org.springframework.boot.CommandLineRunner;
@@ -11,13 +13,16 @@ import com.LGR.video_store.dtos.EmployeeCreateDTO;
 import com.LGR.video_store.dtos.GenreCreateDTO;
 import com.LGR.video_store.dtos.MovieCopyCreateDTO;
 import com.LGR.video_store.dtos.MovieCreateDTO;
+import com.LGR.video_store.dtos.PaymentCreateDTO;
 import com.LGR.video_store.dtos.UserCreateDTO;
+import com.LGR.video_store.enums.PaymentType;
 import com.LGR.video_store.enums.Role;
 import com.LGR.video_store.services.ClientService;
 import com.LGR.video_store.services.EmployeeService;
 import com.LGR.video_store.services.GenreService;
 import com.LGR.video_store.services.MovieCopyService;
 import com.LGR.video_store.services.MovieService;
+import com.LGR.video_store.services.PaymentService;
 import com.LGR.video_store.services.UserService;
 
 @Component
@@ -30,13 +35,15 @@ public class DataInitialization implements CommandLineRunner {
 	private final ClientService clientService;
 	private final GenreService genreService;
 	private final MovieCopyService movieCopyService;
+	private final PaymentService paymentService;
 
 	public DataInitialization(UserService usrService,
 							  EmployeeService empService,
 							  ClientService clientService,
 							  GenreService genreService,
 							  MovieService movieService,
-							  MovieCopyService movieCopyService) {
+							  MovieCopyService movieCopyService,
+							  PaymentService paymentService) {
 		
 		this.usrService = usrService;
 		this.empService = empService;
@@ -44,6 +51,7 @@ public class DataInitialization implements CommandLineRunner {
 		this.genreService = genreService;
 		this.movieService = movieService;	
 		this.movieCopyService = movieCopyService;
+		this.paymentService = paymentService;
 	}
 
 	@Override
@@ -126,5 +134,13 @@ public class DataInitialization implements CommandLineRunner {
 		movieCopyService.create(copy3);
 		movieCopyService.create(copy4);
 		movieCopyService.create(copy5);
+		
+		PaymentCreateDTO payment1 = new PaymentCreateDTO(3L, 250.0);
+		PaymentCreateDTO payment2 = new PaymentCreateDTO(2L, 230.0);
+		PaymentCreateDTO payment3 = new PaymentCreateDTO(1L, 210.0);
+		
+		paymentService.create(payment1);
+		paymentService.create(payment2);
+		paymentService.create(payment3);
 	}
 }

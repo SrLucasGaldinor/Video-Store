@@ -3,7 +3,9 @@ package com.LGR.video_store.entities;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import com.LGR.video_store.enums.PaymentStatus;
 import com.LGR.video_store.enums.PaymentType;
+import com.LGR.video_store.exceptions.BusinessRuleException;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -24,6 +26,9 @@ public class Payment {
 	@Enumerated(EnumType.STRING)
 	private PaymentType paymentType;
 	
+	@Enumerated(EnumType.STRING)
+	private PaymentStatus status;
+	
 	private Double amount;
 	private LocalDateTime paymentDate;
 	
@@ -31,43 +36,48 @@ public class Payment {
 
 	}
 
-	public Payment(PaymentType paymentType, Double amount, LocalDateTime paymentDate) {
-		this.paymentType = paymentType;
+	public Payment(Double amount) {
 		this.amount = amount;
-		this.paymentDate = paymentDate;
+		this.status = PaymentStatus.PENDING;
+	}
+	
+	public void payWith(PaymentType type) {
+		if(this.status == PaymentStatus.PAID) {
+			throw new BusinessRuleException("Payment already completed");
+		}
+		
+		this.paymentType = type;
+		this.paymentDate = LocalDateTime.now();
+		this.status = PaymentStatus.PAID;
+	}
+	
+	public void cancel() {
+		if(this.status == PaymentStatus.PAID) {
+			throw new BusinessRuleException("Payment already completed");
+		}
+		
+		this.status = PaymentStatus.CANCELED;
+	}
+	
+	public Long getId() {
+		return id;
 	}
 
 	public Double getAmount() {
 		return amount;
 	}
 
-	public void setAmount(Double amount) {
-		this.amount = amount;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
 	public PaymentType getPaymentType() {
 		return paymentType;
+	}
+
+	public PaymentStatus getStatus() {
+		return status;
 	}
 
 	public LocalDateTime getPaymentDate() {
 		return paymentDate;
 	}
-	
-	 public void payWithDebit() {
-		 this.paymentType = PaymentType.DEBIT;
-	 }
-	 
-	 public void payWithCredit() {
-		 this.paymentType = PaymentType.CREDIT;
-	 }
-	 
-	 public void payWithPIX() {
-		 this.paymentType = PaymentType.PIX;
-	 }
 
 	@Override
 	public int hashCode() {
