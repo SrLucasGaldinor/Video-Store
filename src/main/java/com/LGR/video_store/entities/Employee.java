@@ -1,5 +1,7 @@
 package com.LGR.video_store.entities;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
@@ -7,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -26,6 +29,9 @@ public class Employee {
 	@OneToOne
 	@JoinColumn(name = "user_id", unique = true)
 	private User user;
+	
+	@OneToMany(mappedBy = "employee")
+	List<Rental> rentals = new ArrayList<>();
 	
 	public Employee() {
 
@@ -57,6 +63,18 @@ public class Employee {
 		this.cpf = cpf;
 	}
 	
+	public User getUser() {
+		return user;
+	}
+//			
+	public List<Rental> getRentals() {
+		return rentals;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
 	public boolean isActive() {
 		return active;
 	}
@@ -67,15 +85,7 @@ public class Employee {
 
 	public void deactivate() {
 		this.active = false;
-	}
-	
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
+	}	
 
 	@Override
 	public int hashCode() {

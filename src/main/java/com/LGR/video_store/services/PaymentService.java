@@ -7,32 +7,39 @@ import com.LGR.video_store.dtos.PaymentCreateDTO;
 import com.LGR.video_store.dtos.PaymentProcessDTO;
 import com.LGR.video_store.dtos.PaymentResponseDTO;
 import com.LGR.video_store.entities.Payment;
+import com.LGR.video_store.entities.Rental;
 import com.LGR.video_store.exceptions.ResourceNotFoundException;
 import com.LGR.video_store.repositories.PaymentRepository;
+import com.LGR.video_store.repositories.RentalRepository;
 
 @Service
 public class PaymentService {
 
-	private final PaymentRepository repository;
+	private final PaymentRepository paymentRepository;
+	private final RentalRepository rentalRepository;
 	
-	public PaymentService(PaymentRepository repository) {
-		this.repository = repository;
+	public PaymentService(PaymentRepository paymentRepository, RentalRepository rentalRepository) {
+		this.paymentRepository = paymentRepository;
+		this.rentalRepository = rentalRepository;
 	}
 	
 	@Transactional
 	public PaymentResponseDTO create(PaymentCreateDTO dto) {
-		Payment payment = new Payment(dto.getAmount());
-		return toResponseDTO(repository.save(payment));
+		Rental rental = rentalRepository.findById(dto.getRentalId())
+				.orElseThrow(() -> new ResourceNotFoundException("Resource not found"));	
+		
+		Payment payment = new Payment(rental, dto.getAmount());
+		return toResponseDTO(paymentRepository.save(payment));
 	}
 	
 	@Transactional
 	public PaymentResponseDTO processPayment(Long id, PaymentProcessDTO dto) {
-		Payment payment = repository.findById(id)
+		Payment payment = paymentRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
 		
 		payment.payWith(dto.getPaymentType());
 		
-		return toResponseDTO(repository.save(payment));
+		return toResponseDTO(paymentRepository.save(payment));
 	}
 
 	private PaymentResponseDTO toResponseDTO(Payment payment) {
@@ -41,6 +48,6 @@ public class PaymentService {
 									  payment.getStatus(),
 									  payment.getAmount(),
 									  payment.getPaymentDate(),
-									  1L);
+									  payment.getRental().getId());
 	}	
 }

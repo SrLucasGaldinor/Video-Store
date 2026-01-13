@@ -13,6 +13,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -32,11 +34,16 @@ public class Payment {
 	private Double amount;
 	private LocalDateTime paymentDate;
 	
+	@OneToOne
+	@JoinColumn(name = "rental_id", nullable = false)
+	private Rental rental;
+
 	public Payment() {
 
 	}
 
-	public Payment(Double amount) {
+	public Payment(Rental rental, Double amount) {
+		this.rental = rental;
 		this.amount = amount;
 		this.status = PaymentStatus.PENDING;
 	}
@@ -77,6 +84,10 @@ public class Payment {
 
 	public LocalDateTime getPaymentDate() {
 		return paymentDate;
+	}
+	
+	public Rental getRental() {
+		return rental;
 	}
 
 	@Override

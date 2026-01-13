@@ -1,11 +1,16 @@
 package com.LGR.video_store.entities;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,6 +26,9 @@ public class Client {
 	private String phone;
 	private boolean active = true;
 	
+	@OneToMany(mappedBy = "rental")
+	List<Rental> rentals = new ArrayList<>();
+	
 	public Client() {
 
 	}
@@ -29,6 +37,10 @@ public class Client {
 		this.name = name;
 		this.cpf = cpf;
 		this.phone = phone;
+	}
+	
+	public Long getId() {
+		return id;
 	}
 
 	public String getName() {
@@ -54,9 +66,9 @@ public class Client {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-
-	public Long getId() {
-		return id;
+	
+	public List<Rental> getRentals() {
+		return rentals;
 	}
 
 	public boolean isActive() {
